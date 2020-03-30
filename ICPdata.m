@@ -1,0 +1,11 @@
+M = csvread('021051CD.csv',1,0);
+t = 0:1/50:1/50*(size(M,1)-1);
+figure;
+subplot(2,1,1);
+plot(t,M(:,3));
+xlabel('time(s)');
+ylabel('ICP mmHg');
+subplot(2,1,2);
+plot(t,M(:,2));
+xlabel('time(s)');
+ylabel('ABP mmHg');
