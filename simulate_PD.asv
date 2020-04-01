@@ -136,7 +136,7 @@ if p.Plot
         ylabel('GPe rate (Hz)');
         box on;
         set(gca,'FontSize',12);
-        %xlim([30 120])
+        ylim([0 300])
     end
 end
 Y.y = sol.y;
