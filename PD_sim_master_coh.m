@@ -60,7 +60,7 @@ p.length  = 40;
 %     load('cohs.mat');
 %     load('pows.mat');
 % catch
-for n = 1:20
+for n = 1:50
     for L = 1:3
         for ES = 1:12
             
@@ -138,12 +138,32 @@ save('pows.mat','pows');
     
 %end
 %%
-for ES = 1:12
-coh           = collect(cohs(:,2,:),'cohspctrm');
-hb            = find(cohs{1,1,1}.freq > 21 &  cohs{1,1,1}.freq < 30);
-coh_stn_M(ES) = mean(mean(mean(coh(:,[1 3],hb),1),2),3);
-coh_stn_S(ES) = mean(mean(std(coh(:,[1 3],hb),1),2),3)./sqrt(size(coh,1));
+for L = 1:3
+    for ES = 1:12
+        coh           = collect(cohs(ES,L,:),'cohspctrm');
+        hb            = find(cohs{1,1,1}.freq > 22 &  cohs{1,1,1}.freq < 29);
+        coh_stn_M(L,ES) = mean(mean(mean(coh(:,[1 3],hb),1),2),3);
+        coh_stn_S(L,ES) = mean(mean(std(coh(:,[1 3],hb),1),2),3)./sqrt(size(coh,1));
+    end
 end
+figure;
+
+plot(0:11,coh_stn_M(1,:),'bo','MarkerFaceColor','b');hold on;
+%plot(0:11,coh_stn_M(2,:),'bo','MarkerFaceColor','b');hold on;
+%plot(0:11,coh_stn_M(3,:),'go','MarkerFaceColor','g');hold on;
+% h = legend('Wgie = 0','Wgie = 0.5','Wgie = 1');
+%set(h,'box','off','Location','NorthEastOutside');
+
+eb = errorbar(0:11,coh_stn_M(1,:),coh_stn_S(1,:),'LineStyle', 'none');hold on
+set(eb, 'color', 'b', 'LineWidth', 1);hold on;
+
+%eb = errorbar(0:11,coh_stn_M(2,:),coh_stn_S(2,:),'LineStyle', 'none');hold on
+%set(eb, 'color', 'b', 'LineWidth', 1);hold on;
+
+%eb = errorbar(0:11,coh_stn_M(3,:),coh_stn_S(3,:),'LineStyle', 'none');hold on
+%set(eb, 'color', 'g', 'LineWidth', 1);hold on;
+set(gca,'FontSize',14);
+xlim([-0.5 11.5])
 
 
 %%
